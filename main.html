@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Fruit Lounge</title>
+        <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
+        <script src="alert.js"></script>
+        <script>
+            $('document').ready(function(){
+                var cb = function(index) {
+                    log(index)
+                }
+                var actions = ['this', 'that', 'there', 'those']
+
+                GuaActions('title', actions, cb)
+            })
+
+        </script>
+        <style>
+            .done {
+                color: lightgray;
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="form">
+                <input id="id-input-add" name="name" value="567">
+                <br>
+                <button id="id-button-add" name="button">add</button>
+            </div>
+            <div id="id-div-todo">
+                <div class="todo-cell" data-id="401">
+                    <span><h1>hello</h1></span>
+                    <div class="">
+                        <button type="button" name="button" class="edit-button">edit</button>
+                        <button type="button" name="button" class="delete-button">delete</button>
+                        <button type="button" name="button" class="complete-button">complete</button>
+                    </div>
+                </div>
+                <div class="todo-cell">
+                    <span><h1>world</h1></span>
+                    <div class="">
+                        <button type="button" name="button" class="edit-button">edit</button>
+                        <button type="button" name="button" class="delete-button">delete</button>
+                        <button type="button" name="button" class="complete-button">complete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var log = function() {
+                console.log.apply(console, arguments)
+            }
+
+            var todoTemplete = function(todo) {
+                var t = `
+                <div class="todo-cell">
+                    <span><h1>${todo}</h1></span>
+                    <div class="">
+                        <button type="button" name="button" class="edit-button">edit</button>
+                        <button type="button" name="button" class="delete-button">delete</button>
+                        <button type="button" name="button" class="complete-button">complete</button>
+                    </div>
+                </div>
+                `
+                return t
+            }
+
+            // 事件 ***绑定***
+            $('#id-button-add').on('click',function(event){
+                var todo = $('#id-input-add').val()
+                $('#id-div-todo').append(todoTemplete(todo))
+            })
+
+            // 事件 ***委托***
+            $('#id-div-todo').on('click', '.delete-button', function(event){
+                log('delete')
+                var button = $(event.target)
+                button.closest('.todo-cell').remove()
+            })
+
+            $('#id-div-todo').on('click', '.complete-button', function(event){
+                log('complete')
+                var button = $(event.target)
+                var span = button.closest('.todo-cell').find('span')
+                span.toggleClass('done')
+            })
+
+            $('#id-div-todo').on('click', '.edit-button', function(event){
+                log('edit')
+                var button = $(event.target)
+                var span = button.closest('.todo-cell').find('span')
+                var t = span.text()
+                log('span.text', t)
+            })
+        </script>
+    </body>
+</html>
