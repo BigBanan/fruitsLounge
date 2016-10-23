@@ -98,6 +98,7 @@ var insertComCss = function() {
         .userPro {
             display: block;
             width: 71px;
+            height: 71px;
             position: absolute;
             top: 25%;
             left: 1%;
@@ -135,7 +136,22 @@ var insertComForm = function() {
         </div>
         <div class="divsion"></div>
         <div class="allComments">
-
+            <div class="comment-i">
+                <img class="comment-img-head" src="profilePic/peach.jpg" alt=head/>
+                <div class="comment-content">
+                    <span>桃子 :</span>
+                    <span>嗨，欢迎来到水果聊天室 ！</span>
+                    <span class="comment-time">10 月 12 号</span>
+                </div>
+            </div>
+            <div class="comment-i">
+                <img class="comment-img-head" src="profilePic/grape.png" alt=head/>
+                <div class="comment-content">
+                    <span>葡萄 :</span>
+                    <span>为了我们的友谊喝一杯吧。</span>
+                    <span class="comment-time">10 月 13 日</span>
+                </div>
+            </div>
         </div>
     </div>
     `
