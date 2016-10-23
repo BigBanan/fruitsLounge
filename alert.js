@@ -1,14 +1,15 @@
-var templete = function(action, index) {
-    var button = `<button class="class-button-action" type="button" data-index=${index}>${action}</button>`
-    return button
+var log = function() {
+    console.log.apply(console, arguments)
 }
 
+var templete = function(action, index) {
+    // var button = `<button class="class-button-action" type="button" data-index=${index}>${action}</button>`
+    var head = `<img class="img-head" src=${action} alt=/>`
 
+    return head
+}
 
-
-
-var GuaActions = function(title, actions, callback) {
-    log('GuaActions')
+var insertCss = function() {
     var css = `
     <style class="modal-remove">
         .modal-mask {
@@ -60,7 +61,9 @@ var GuaActions = function(title, actions, callback) {
     </style>
     `
     $('head').append(css)
+}
 
+var insertContainer = function(title) {
     var insertBody = `
         <div class="modal-container modal-remove">
             <div class="modal-mask"></div>
@@ -71,29 +74,74 @@ var GuaActions = function(title, actions, callback) {
                 <div class="modal-message">
                 </div>
                 <div class="modal-control">
-                    <button class="class-button-modal" type="button" data-type="cancel">Cancel</button>
+                    <button class="class-button-modal" type="button" data-type="cancel">Ok</button>
                 </div>
             </div>
         </div>
     `
     $('body').append(insertBody)
+}
+
+var inputUsername = function() {
+    var t = `
+             <span class="loungeUsernameNote">Please input your name in here.</span>
+             <input class="loungeUsername" type="text" name="name" value="">
+             `
+    $('.modal-message').append(t)
+}
+
+
+var GuaActions = function(title, actions, callback) {
+    log('GuaActions')
+
+    // insertCss()
+    insertContainer(title)
+
 
     var t = templete(title, actions[i])
     for (var i = 0; i < actions.length; i++) {
-        var t = templete(actions[i], i)
+        var path = 'profilePic/' + actions[i]
+        var t = templete(path, i)
         $('.modal-message').append(t)
     }
 
-    $('.class-button-action').on('click', function(){
-        log('click action')
-        var index = $(this).data('index')
-        $('.modal-remove').remove()
-        callback(index)
+    $(".class-button-modal").attr("disabled", true);
+
+    $('.img-head').on('mouseover', function(){
+        log('mouseover')
+        $('.img-head').removeClass('img-head-i-border')
+        $(this).addClass('img-head-i-border')
     })
 
-    $('.class-button-modal').on('click', function(){
-        log('click ok')
+    $('.img-head').on('click', function(){
+        log('click')
+        $('.img-head').unbind()
+        window.userProfilePic = $(this).attr('src')
+        $('.img-head').fadeOut()
+        inputUsername()
+        $('.loungeUsername').fadeIn(0)
+        // $('.img-head').remove()
+        $('.modal-title').text('Now,Please input your name.')
+
+        $('.loungeUsernameNote').on('click', function(){
+            log('keydown')
+            $(this).remove()
+            $('.loungeUsername').focus()
+        })
+
+        $('.loungeUsername').on('keyup',function(){
+            var len = $(this).val().length
+            if(len > 0) {
+                $(".class-button-modal").attr("disabled", false);
+            } else {
+                $(".class-button-modal").attr("disabled", true);
+            }
+        })
+    })
+
+    $('.modal-control').on('click', function(){
+        log('ok')
+        window.username = $('.loungeUsername').val()
         $('.modal-remove').remove()
-        callback(-1)
     })
 }

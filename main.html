@@ -10,91 +10,112 @@
                 var cb = function(index) {
                     log(index)
                 }
-                var actions = ['this', 'that', 'there', 'those']
+                var title = 'Halo, Please choose one of the fruits.'
+                var imgs = ['apple.png', 'banana.png', 'bananas.jpg',
+                               'grape.png', 'mango.jpg', 'peach.jpg',
+                                'pear.png', 'pineapple.png', 'strawberry.jpg',
+                                'watermelon.png', 'monkey.jpg', 'grape.jpg']
 
-                GuaActions('title', actions, cb)
+                GuaActions(title, imgs, cb)
             })
-
         </script>
-        <style>
-            .done {
+
+
+        <style class="modal-remove">
+            .modal-mask {
+                position: fixed;
+                background: black;
+                width: 100%;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+                opacity: 0.8;
+                color: white;
+            }
+            .modal-alert {
+                font-family: cursive;
+                opacity: 1;
+            }
+            .modal-title {
+                text-align: center;
+                background: #15c5ff;
+                font-size: 33px;
+                padding: 15px;
+            }
+            .modal-message {
+                padding: 10px 5px;
+                background: white;
+                text-align: center;
+            }
+            .class-button-action {
+                width: 100%;
+                font-size: 22px;
+                border: 1px;
+                margin: 1px;
+            }
+            .modal-control {
+                font-size: 0;
+            }
+            .class-button-modal {
+                width: 100%;
+                height: 100%;
+                font-size: 30px;
+                font-family: cursive;
+                padding: 12px;
+                background: #15c5ff;
+                border: 0px;
+                margin: 0px;
+                outline: none;
+            }
+            .vertical-center {
+                position: absolute;;
+                top: 50%;
+                left: 50%;
+                transform:translate(-50%, -50%);
+            }
+
+            .img-head {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                /*border: 1px lightgray solid ;*/
+                border-radius: 5px;
+                margin: 0px;
+                padding: 12px;
+            }
+            .img-head-div {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+            }
+            .img-head-i-border {
+                border: 1px red solid;
+                padding: 11px;
+            }
+            .loungeUsernameNote {
+                display: block;
+                position: absolute;
+                left: 58px;
+                top: 152px;
+                font-size: 24px;
                 color: lightgray;
-                text-decoration: line-through;
+            }
+            .loungeUsername {
+                border-radius: 6px;
+                outline: none;
+                border: black 1px solid;
+                height: 56px;
+                width: 338px;
+                font-size: 32px;
+                padding: 6px 10px;
             }
         </style>
+
     </head>
     <body>
-        <div class="main">
-            <div class="form">
-                <input id="id-input-add" name="name" value="567">
-                <br>
-                <button id="id-button-add" name="button">add</button>
-            </div>
-            <div id="id-div-todo">
-                <div class="todo-cell" data-id="401">
-                    <span><h1>hello</h1></span>
-                    <div class="">
-                        <button type="button" name="button" class="edit-button">edit</button>
-                        <button type="button" name="button" class="delete-button">delete</button>
-                        <button type="button" name="button" class="complete-button">complete</button>
-                    </div>
-                </div>
-                <div class="todo-cell">
-                    <span><h1>world</h1></span>
-                    <div class="">
-                        <button type="button" name="button" class="edit-button">edit</button>
-                        <button type="button" name="button" class="delete-button">delete</button>
-                        <button type="button" name="button" class="complete-button">complete</button>
-                    </div>
-                </div>
-            </div>
+        <div class="img-head-div">
+            <img class="img-head" src="profilePic/apple.png" alt=/>
+
         </div>
-        <script>
-            var log = function() {
-                console.log.apply(console, arguments)
-            }
-
-            var todoTemplete = function(todo) {
-                var t = `
-                <div class="todo-cell">
-                    <span><h1>${todo}</h1></span>
-                    <div class="">
-                        <button type="button" name="button" class="edit-button">edit</button>
-                        <button type="button" name="button" class="delete-button">delete</button>
-                        <button type="button" name="button" class="complete-button">complete</button>
-                    </div>
-                </div>
-                `
-                return t
-            }
-
-            // 事件 ***绑定***
-            $('#id-button-add').on('click',function(event){
-                var todo = $('#id-input-add').val()
-                $('#id-div-todo').append(todoTemplete(todo))
-            })
-
-            // 事件 ***委托***
-            $('#id-div-todo').on('click', '.delete-button', function(event){
-                log('delete')
-                var button = $(event.target)
-                button.closest('.todo-cell').remove()
-            })
-
-            $('#id-div-todo').on('click', '.complete-button', function(event){
-                log('complete')
-                var button = $(event.target)
-                var span = button.closest('.todo-cell').find('span')
-                span.toggleClass('done')
-            })
-
-            $('#id-div-todo').on('click', '.edit-button', function(event){
-                log('edit')
-                var button = $(event.target)
-                var span = button.closest('.todo-cell').find('span')
-                var t = span.text()
-                log('span.text', t)
-            })
-        </script>
     </body>
 </html>
