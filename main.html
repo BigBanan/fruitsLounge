@@ -5,10 +5,12 @@
         <title>Fruit Lounge</title>
         <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
         <script src="alert.js"></script>
+        <script src="lounge.js"></script>
         <script>
             $('document').ready(function(){
                 var cb = function(index) {
-                    log(index)
+                    log('addUser')
+                    addUser()
                 }
                 var title = 'Halo, Please choose one of the fruits.'
                 var imgs = ['apple.png', 'banana.png', 'bananas.jpg',

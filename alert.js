@@ -148,13 +148,15 @@ var bindEventOk = function() {
         log('ok')
         window.username = $('.loungeUsername').val()
         $('.modal-remove').remove()
+        window.alertCallback()
     })
 }
 
-var initAlert = function(title, actions) {
+var initAlert = function(title, actions, callback) {
     insertCss()
     insertContainer(title)
     $(".class-button-modal").attr("disabled", true)
+    window.alertCallback = callback
 
     var t = templete(actions)
     $('.modal-message').append(t)
@@ -162,7 +164,7 @@ var initAlert = function(title, actions) {
 
 var GuaActions = function(title, actions, callback) {
 
-    initAlert(title, actions)
+    initAlert(title, actions, callback)
 
     bindEventMouseover()
 
