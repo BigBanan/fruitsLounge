@@ -2,11 +2,14 @@ var log = function() {
     console.log.apply(console, arguments)
 }
 
-var templete = function(action, index) {
-    // var button = `<button class="class-button-action" type="button" data-index=${index}>${action}</button>`
-    var head = `<img class="img-head" src=${action} alt=/>`
-
-    return head
+var templete = function(actions, index) {
+    var t = ''
+    $(actions).each(function(i, e) {
+        var path = 'profilePic/' + e
+    var head = `<img class="img-head" src=${path} alt=/>`
+    t += head
+    })
+    return t
 }
 
 var insertCss = function() {
@@ -23,18 +26,19 @@ var insertCss = function() {
             color: white;
         }
         .modal-alert {
-            width: 200px;
-            margin: 0 auto;
+            font-family: cursive;
             opacity: 1;
         }
         .modal-title {
             text-align: center;
-            background: lightblue;
-            font-size: 27px;
+            background: #15c5ff;
+            font-size: 33px;
+            padding: 15px;
         }
         .modal-message {
             padding: 10px 5px;
             background: white;
+            text-align: center;
         }
         .class-button-action {
             width: 100%;
@@ -43,20 +47,61 @@ var insertCss = function() {
             margin: 1px;
         }
         .modal-control {
-            /**********使 button 之间的 空格 不被显示出来***********/
             font-size: 0;
         }
         .class-button-modal {
             width: 100%;
             height: 100%;
-            font-size: 22px;
-            border: 0;
-            margin: 0;
+            font-size: 30px;
+            font-family: cursive;
+            padding: 12px;
+            background: #15c5ff;
+            border: 0px;
+            margin: 0px;
+            outline: none;
         }
         .vertical-center {
+            position: absolute;;
             top: 50%;
-            position: relative;
-            transform:translateY(-50%)
+            left: 50%;
+            transform:translate(-50%, -50%);
+        }
+
+        .img-head {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            /*border: 1px lightgray solid ;*/
+            border-radius: 5px;
+            margin: 0px;
+            padding: 12px;
+        }
+        .img-head-div {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+        .img-head-i-border {
+            border: 1px red solid;
+            padding: 11px;
+        }
+        .loungeUsernameNote {
+            display: block;
+            position: absolute;
+            left: 9%;
+            top: 36%;
+            font-size: 24px;
+            color: lightgray;
+            padding: 20px;
+        }
+        .loungeUsername {
+            border-radius: 6px;
+            outline: none;
+            border: black 1px solid;
+            height: 56px;
+            width: 338px;
+            font-size: 32px;
+            padding: 6px 10px;
         }
     </style>
     `
@@ -90,28 +135,36 @@ var inputUsername = function() {
     $('.modal-message').append(t)
 }
 
-
-var GuaActions = function(title, actions, callback) {
-    log('GuaActions')
-
-    // insertCss()
-    insertContainer(title)
-
-
-    var t = templete(title, actions[i])
-    for (var i = 0; i < actions.length; i++) {
-        var path = 'profilePic/' + actions[i]
-        var t = templete(path, i)
-        $('.modal-message').append(t)
-    }
-
-    $(".class-button-modal").attr("disabled", true);
-
+var bindEventMouseover = function() {
     $('.img-head').on('mouseover', function(){
         log('mouseover')
         $('.img-head').removeClass('img-head-i-border')
         $(this).addClass('img-head-i-border')
     })
+}
+
+var bindEventOk = function() {
+    $('.modal-control').on('click', function(){
+        log('ok')
+        window.username = $('.loungeUsername').val()
+        $('.modal-remove').remove()
+    })
+}
+
+var initAlert = function(title, actions) {
+    insertCss()
+    insertContainer(title)
+    $(".class-button-modal").attr("disabled", true)
+
+    var t = templete(actions)
+    $('.modal-message').append(t)
+}
+
+var GuaActions = function(title, actions, callback) {
+
+    initAlert(title, actions)
+
+    bindEventMouseover()
 
     $('.img-head').on('click', function(){
         log('click')
@@ -119,7 +172,8 @@ var GuaActions = function(title, actions, callback) {
         window.userProfilePic = $(this).attr('src')
         $('.img-head').fadeOut()
         inputUsername()
-        $('.loungeUsername').fadeIn(0)
+        $('.loungeUsername').fadeIn()
+        $('.loungeUsernameNote').fadeIn()
         // $('.img-head').remove()
         $('.modal-title').text('Now,Please input your name.')
 
@@ -139,9 +193,5 @@ var GuaActions = function(title, actions, callback) {
         })
     })
 
-    $('.modal-control').on('click', function(){
-        log('ok')
-        window.username = $('.loungeUsername').val()
-        $('.modal-remove').remove()
-    })
+    bindEventOk()
 }
