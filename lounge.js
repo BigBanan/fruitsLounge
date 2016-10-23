@@ -94,6 +94,23 @@ var insertComCss = function() {
             /*自动换行*/
             white-space: normal;
         }
+
+        .userPro {
+            display: block;
+            width: 71px;
+            position: absolute;
+            top: 25%;
+            left: 1%;
+        }
+        .userName {
+            display: block;
+            position: absolute;
+            display: inline-block;
+            top: 37%;
+            left: 2%;
+            font-size: 15px;
+            font-family: monospace;
+        }
     </style>
     `
 
@@ -105,6 +122,10 @@ var insertComForm = function() {
     <div class="comment">
         <div class="add-comment">
             <div class="container">
+                <div class="userInfo">
+                    <img class="userPro comment-img-head" src=${window.userProfilePic} alt="" />
+                    <span class="userName">${window.username}</span>
+                </div>
                 <textarea id="id-input-comment" maxlength="140"></textarea>
             </div>
             <div class="note">
